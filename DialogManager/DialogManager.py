@@ -21,8 +21,8 @@ class DM:
                              'attend_class_before', 'know_about_ruisi', 'user_goal', 'person_accompany', 'reserve_time']
         # agent需要去问用户的slot
         self.agent_request_slots = ["child_age", "english_level", "special_need", "know_about_ruisi", "client_location",
-                                    "reserve_location", "phone_number", "reserve_time", "client_name", "client_gender",
-                                    "child_name"]
+                                    "phone_number", "client_name", "client_gender",
+                                    "child_name"] # "reserve_location", "reserve_time"
         # agent已经知道的slot
         self.agent_inform_slots = {}
         # 咨询记录模版
@@ -107,11 +107,15 @@ class DM:
                         # 对用户inform的值做特殊处理，待补充
                         # 地址特殊处理
                         if "client_location" in usr_diaact["inform_slots"]:
-                            city, town = re.findall("(.*?)市(.*?)区", usr_diaact["inform_slots"]["client_location"])[0]
-                            agent_diaact = {"diaact": "select", "request_slots": {'reserve_location': 'UNK'},
-                                            "inform_slots": {'reserve_location': str(self.location[city][town])}}
-                            self.agent_request_slots.remove("reserve_location")
-                            self.last_request_slot = 'reserve_location'
+                            # city, town = re.findall("(.*?)市(.*?)区", usr_diaact["inform_slots"]["client_location"])[0]
+                            # agent_diaact = {"diaact": "select", "request_slots": {'reserve_location': 'UNK'},
+                            #                 "inform_slots": {'reserve_location': str(self.location[city][town])}}
+                            # self.agent_request_slots.remove("reserve_location")
+                            # self.last_request_slot = 'reserve_location'
+                            agent_diaact = {"diaact": "request", "request_slots": {self.agent_request_slots[0]: "UNK"},
+                                            "inform_slots": {}}
+                            self.last_request_slot = self.agent_request_slots[0]
+                            del self.agent_request_slots[0]
                         elif "know_about_ruisi" in usr_diaact["inform_slots"]:
                             agent_diaact = {"diaact": "request", "request_slots": {self.agent_request_slots[0]: "UNK"},
                                             "inform_slots": {"ruisi_introduction": "UNK"}}
@@ -119,21 +123,24 @@ class DM:
                             del self.agent_request_slots[0]
                         elif "special_need" in usr_diaact["inform_slots"]:
                             if 'child_age' in self.agent_inform_slots:  # 判断年龄
-                                age = int(re.findall("\d", self.agent_inform_slots['child_age'])[0])
-                                if 3 <= age <= 5:
-                                    self.index = 0
-                                elif 6 <= age <= 12:
-                                    self.index = 1
-                                elif 13 <= age <= 18:
-                                    self.index = 2
-                                else:
-                                    self.index = 3   # no matching,close the dialog
-                                    self.flag = True
+                                try:
+                                    age = int(re.findall("\d", self.agent_inform_slots['child_age'])[0])
+                                    if 3 <= age <= 5:
+                                        self.index = 0
+                                    elif 6 <= age <= 12:
+                                        self.index = 1
+                                    elif 13 <= age <= 18:
+                                        self.index = 2
+                                    else:
+                                        self.index = 3   # no matching,close the dialog
+                                        self.flag = True
+                                except IndexError as e:
+                                    self.index = 4
                             else:
                                 # 未告知年龄
                                 self.index = 4
                             agent_diaact = {"diaact": "request", "request_slots": {self.agent_request_slots[0]: "UNK"},
-                                            "inform_slots": {"special_need": "UNK"}}
+                                            "inform_slots": {}}
                             self.last_request_slot = self.agent_request_slots[0]
                             del self.agent_request_slots[0]
                         else:

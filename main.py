@@ -9,7 +9,10 @@ while flag:
     usr_raw_sentence = input("user: ")
     agent_response_diaact, index = dm.agent_response(usr_raw_sentence)
     print("agent_diaact:", agent_response_diaact, '\n', "index: ", index)
-    agent_nl = dm.agent_nl(agent_response_diaact, index)
+    try:
+        agent_nl = dm.agent_nl(agent_response_diaact, index)
+    except KeyError as e:
+        agent_nl = "家长可以留下您的联系方式哦，我们后续会安排专业的老师与您对接，为您详细介绍相关事宜。"
     print("agent: ", agent_nl)
     flag = not dm.flag
 print(dm.agent_inform_slots)

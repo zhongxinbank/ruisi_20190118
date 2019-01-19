@@ -124,3 +124,20 @@ dia_act = {'diaact': 'bye',
 # s = nlg.get_sentence(dia_act)
 # print(s)
 
+
+
+
+'''
+self.request_slots = ['school_location', 'school_phone', 'sale', 'other_contact', 'cut_in', 'class_schedule',
+                              'have_school_somewhere', 'attend_class_alone', 'allow_audition', 'audition_free',
+                              'child_attend', 'allow_parents_together', 'class_length', 'audition_introduction',
+                              'textbook', 'fulltime_or_sparetime', 'class_size', 'length_of_per_period',
+                              'allow_return_premium', 'lesson_accompany', 'school_type', 'teacher_nation', 'class_type',
+                              'online_course', 'online_course_location', 'fee', 'ruisi_introduction']
+
+
+# agent需要去问用户的slot
+self.agent_request_slots = ["child_age", "english_level", "special_need", "know_about_ruisi", "client_location",
+                            "phone_number", "client_name", "client_gender",
+                            "child_name"] # "reserve_location", "reserve_time"
+'''
