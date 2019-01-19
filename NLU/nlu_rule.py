@@ -195,7 +195,7 @@ class NLU:
             slot = cur_tag.split('-')[1]
             slot_val_str = ' '.join(string[pre_tag_index:-1])
             slot_val_dict[slot] = slot_val_str
-            print('slot_val_dict:', slot_val_dict)
+            # print('slot_val_dict:', slot_val_dict)
 
         for item in slot_val_dict.keys():
             if item in self.request_slots:
@@ -247,9 +247,9 @@ class NLU:
 
     def get_diaact(self, raw_sentence, history):
         m, n = self.participle(raw_sentence)
-        print("word:{} ; gender:{}".format(m, n))
+        # print("word:{} ; gender:{}".format(m, n))
         iob = self.get_iob(m, n)
-        print("iob:", iob)
+        # print("iob:", iob)
         diaact = self.iob_to_diaact(iob, m, history, raw_sentence)
         return diaact
 

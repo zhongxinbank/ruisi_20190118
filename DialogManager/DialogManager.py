@@ -48,7 +48,7 @@ class DM:
         """针对于用户的每句话，agent作出的回复，返回diaact"""
         self.dialog_content += 'user:' + raw_usr_sentence + '\n'
         usr_diaact = self.nlu.get_diaact(raw_usr_sentence, history=self.history)
-        print("usr_diaact:", usr_diaact)
+        # print("usr_diaact:", usr_diaact)
         # 更新history
         dic = {
             "speaker": "user",
@@ -217,7 +217,7 @@ class DM:
             else:
                 record_row.append('')
         record_row.append(str(self.dialog_content))
-        print(record_row, len(record_row))
+        # print(record_row, len(record_row))
         # 初始化数据库连接
         db = pymysql.connect(host="localhost", port=3306, user="helic", passwd="root1234", db="ruisi",
                              charset="utf8")
