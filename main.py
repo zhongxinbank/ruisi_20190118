@@ -14,6 +14,8 @@ while flag:
         agent_nl = "家长可以留下您的联系方式哦，我们后续会安排专业的老师与您对接，为您详细介绍相关事宜。"
     print("agent: ", agent_nl)
     flag = not dm.flag
+    note = dm.get_database() # 要存入文件的string
+    print(note)
 # dm.update_database()
 
 
